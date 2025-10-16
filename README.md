@@ -14,3 +14,9 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+# Goal from CodeWithAndea
+Make BMI calculator and run the following tests:
+First test: when the input weight field is empty, the output BMI text field should be empty.
+Second test: when the input height field is empty, the output BMI text field should be empty.
+Third test: when both the weight and height fields are not empty, the BMI text field shows the correct value.
