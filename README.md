@@ -22,3 +22,4 @@ Second test: when the input height field is empty, the output BMI text field sho
 Third test: when both the weight and height fields are not empty, the BMI text field shows the correct value.
 
 # Made my own design using Figma - this is what we are building in terms of UI
+<img width="1330" height="942" alt="Frame 6" src="https://github.com/user-attachments/assets/eae3bae2-cdff-4371-ba1b-d41343d40b09" />
