@@ -20,3 +20,5 @@ Make BMI calculator and run the following tests:
 First test: when the input weight field is empty, the output BMI text field should be empty.
 Second test: when the input height field is empty, the output BMI text field should be empty.
 Third test: when both the weight and height fields are not empty, the BMI text field shows the correct value.
+
+# Made my own design using Figma - this is what we are building in terms of UI
