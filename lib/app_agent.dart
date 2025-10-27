@@ -23,7 +23,6 @@ class AppAgent {
     model: 'gemini-2.5-flash',
     toolConfig: ToolConfig(
       functionCallingConfig: FunctionCallingConfig.any({
-        'setPrimaryButtonColor',
         'askConfirmation',
         'setFontFamily',
         'setFontSizeFactor',
@@ -35,7 +34,6 @@ class AppAgent {
     ),
     tools: [
       Tool.functionDeclarations([
-        setPrimaryButtonColorTool,
         askConfirmationTool,
         fontFamilyTool,
         fontSizeFactorTool,
@@ -114,10 +112,6 @@ class AppAgent {
       switch (functionCall.name) {
         case 'askConfirmation':
           response = await askConfirmationCall(context, functionCall);
-          break;
-
-        case 'setPrimaryButtonColor':
-          setPrimaryButtonColorCall(context, functionCall);
           break;
 
         case 'setFontFamily':

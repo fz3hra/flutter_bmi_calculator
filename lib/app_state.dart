@@ -42,9 +42,4 @@ class AppState with ChangeNotifier {
 
     return appColor;
   }
-
-  void setPrimaryButtonColor(Color color) {
-    primaryButtonColor = color;
-    notifyListeners();
-  }
 }

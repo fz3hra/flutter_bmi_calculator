@@ -11,18 +11,6 @@ final askConfirmationTool = FunctionDeclaration(
   },
 );
 
-final setPrimaryButtonColorTool = FunctionDeclaration(
-  'setPrimaryButtonColor',
-  'Sets the primary color of the main action button in the app to improve visibility or match the user\'s preference.',
-  parameters: {
-    'color': Schema.string(
-      description:
-          '''The new color value for the primary button in a 6-digit hexadecimal format (e.g., "FF0000" for red, "0000FF" for blue).''',
-      nullable: true,
-    ),
-  },
-);
-
 final fontFamilyTool = FunctionDeclaration(
   'setFontFamily',
   'Set the app theme\'s font family',

@@ -52,14 +52,3 @@ Color colorFromHex(String hexString) {
   buffer.write(hexString.replaceFirst('#', ''));
   return Color(int.parse(buffer.toString(), radix: 16));
 }
-
-void setPrimaryButtonColorCall(
-  BuildContext context,
-  FunctionCall functionCall,
-) {
-  final colorHex = functionCall.args['color']! as String;
-  final newColor = colorFromHex(colorHex);
-  if (context.mounted) {
-    context.read<AppState>().setPrimaryButtonColor(newColor);
-  }
-}

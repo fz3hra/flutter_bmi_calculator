@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    appAgent.initialize();
+    // appAgent.initialize();
 
     nameController = TextEditingController();
     genderController = TextEditingController();
@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void submitFeedback() {
     BetterFeedback.of(context).show((UserFeedback feedback) {
-      appAgent.submitFeedback(context, feedback.screenshot, feedback.text);
+      //   appAgent.submitFeedback(context, feedback.screenshot, feedback.text);
     });
   }
 
@@ -61,7 +61,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final manager = context.watch<AppState>();
 
     return Scaffold(
-      //   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -70,17 +69,11 @@ class _HomeScreenState extends State<HomeScreen> {
             gradient: LinearGradient(
               begin: Alignment.bottomRight,
               end: Alignment.topLeft,
-              // TODO st it back well alter.
               colors: <Color>[
                 Color(0xFF0F2333),
                 Color(0xFF247BA0),
                 Color(0xFF189AE5),
               ],
-              //   colors: <Color>[
-              //     scheme.surfaceContainerHighest, // or scheme.surface
-              //     scheme.primary,
-              //     scheme.tertiary, // or scheme.secondary
-              //   ],
               stops: [0.50, 0.90, 1.00],
             ),
           ),
@@ -132,11 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     filled: true,
-                    // TODO st it back well alter.
                     fillColor: Color(0xFFE8F1F2),
-                    // fillColor: Theme.of(
-                    //   context,
-                    // ).colorScheme.surfaceContainerHighest,
                   ),
                 ),
                 Gap(24),
@@ -156,12 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     filled: true,
-
-                    // TODO st it back well alter.
                     fillColor: Color(0xFFE8F1F2),
-                    // fillColor: Theme.of(
-                    //   context,
-                    // ).colorScheme.surfaceContainerHighest,
                   ),
                 ),
                 Gap(24),
@@ -174,9 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       hintText: "Gender",
                       hintStyle: GoogleFonts.inter(
                         textStyle: TextStyle(
-                          // TODO: st it back well later.
                           color: Color(0xFF546A7B),
-                          //   color: Theme.of(context).colorScheme.onPrimary,
                           fontSize: 14,
                         ),
                       ),
@@ -198,13 +180,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         builder: (context) => CalculatorScreen(),
                       ),
                     ),
-                    // TODO st it back well alter.
-                    // color: const Color(0xFF1B98E1),
-                    // color: Theme.of(context).colorScheme.primary,
                     child: DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        color: manager.primaryButtonColor,
+                        // color: manager.primaryButtonColor,
+                        color: const Color(0xFF1B98E1),
                         boxShadow: const [
                           BoxShadow(
                             color: Color(
@@ -224,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Text(
                               "Continue",
                               style: GoogleFonts.inter(
-                                color: Colors.white, // make text solid white
+                                color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
                               ),
