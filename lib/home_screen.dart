@@ -1,8 +1,12 @@
+import 'package:feedback/feedback.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bmi_calculator/app_agent.dart';
+import 'package:flutter_bmi_calculator/app_state.dart';
 import 'package:flutter_bmi_calculator/calculator.dart';
 import 'package:flutter_bmi_calculator/calculator_screen.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,6 +16,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  AppAgent appAgent = AppAgent();
+
   late TextEditingController nameController;
   late TextEditingController genderController;
   late TextEditingController dobController;
@@ -21,6 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    appAgent.initialize();
+
     nameController = TextEditingController();
     genderController = TextEditingController();
     dobController = TextEditingController();
@@ -34,6 +42,12 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
+  void submitFeedback() {
+    BetterFeedback.of(context).show((UserFeedback feedback) {
+      appAgent.submitFeedback(context, feedback.screenshot, feedback.text);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // var bmiResult = displayBMI();
@@ -43,7 +57,11 @@ class _HomeScreenState extends State<HomeScreen> {
       genderController.text,
     );
 
+    final scheme = Theme.of(context).colorScheme;
+    final manager = context.watch<AppState>();
+
     return Scaffold(
+      //   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -52,11 +70,17 @@ class _HomeScreenState extends State<HomeScreen> {
             gradient: LinearGradient(
               begin: Alignment.bottomRight,
               end: Alignment.topLeft,
+              // TODO st it back well alter.
               colors: <Color>[
                 Color(0xFF0F2333),
                 Color(0xFF247BA0),
                 Color(0xFF189AE5),
               ],
+              //   colors: <Color>[
+              //     scheme.surfaceContainerHighest, // or scheme.surface
+              //     scheme.primary,
+              //     scheme.tertiary, // or scheme.secondary
+              //   ],
               stops: [0.50, 0.90, 1.00],
             ),
           ),
@@ -67,6 +91,27 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             child: Column(
               children: [
+                InkWell(
+                  onTap: submitFeedback,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Icon(
+                        Icons.bug_report,
+                        color: Colors.white,
+                        size: 18,
+                      ),
+                      Gap(8),
+                      Text(
+                        "File Changes",
+                        style: GoogleFonts.inter(
+                          color: Colors.white,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 Image.asset(
                   "assets/logo.png",
                 ),
@@ -87,7 +132,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     filled: true,
+                    // TODO st it back well alter.
                     fillColor: Color(0xFFE8F1F2),
+                    // fillColor: Theme.of(
+                    //   context,
+                    // ).colorScheme.surfaceContainerHighest,
                   ),
                 ),
                 Gap(24),
@@ -107,7 +156,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     filled: true,
+
+                    // TODO st it back well alter.
                     fillColor: Color(0xFFE8F1F2),
+                    // fillColor: Theme.of(
+                    //   context,
+                    // ).colorScheme.surfaceContainerHighest,
                   ),
                 ),
                 Gap(24),
@@ -120,7 +174,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       hintText: "Gender",
                       hintStyle: GoogleFonts.inter(
                         textStyle: TextStyle(
+                          // TODO: st it back well later.
                           color: Color(0xFF546A7B),
+                          //   color: Theme.of(context).colorScheme.onPrimary,
                           fontSize: 14,
                         ),
                       ),
@@ -142,10 +198,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         builder: (context) => CalculatorScreen(),
                       ),
                     ),
+                    // TODO st it back well alter.
+                    // color: const Color(0xFF1B98E1),
+                    // color: Theme.of(context).colorScheme.primary,
                     child: DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        color: const Color(0xFF1B98E1),
+                        color: manager.primaryButtonColor,
                         boxShadow: const [
                           BoxShadow(
                             color: Color(

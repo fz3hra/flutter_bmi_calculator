@@ -177,7 +177,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                             color: Colors.white,
                             size: 18,
                           ),
-                          Gap(16),
+                          Gap(8),
                           Text(
                             "Edit Profile",
                             style: GoogleFonts.inter(
