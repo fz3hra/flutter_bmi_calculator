@@ -94,7 +94,7 @@ void main() {
 
       final result = calculator.displayBMI("8", "2");
 
-      expect(result, "2.0");
+      expect(result, 2.0);
     });
 
     test("Display Correct BMI result; returns 4.0", () {
@@ -102,7 +102,7 @@ void main() {
 
       final result = calculator.displayBMI("16", "2");
 
-      expect(result, "4.0");
+      expect(result, 4.0);
     });
   });
 }

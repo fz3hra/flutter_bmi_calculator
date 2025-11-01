@@ -2,39 +2,46 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bmi_calculator/calculator_screen.dart';
+import 'package:flutter_bmi_calculator/extensions.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // bmiResult
 class ResultScreen extends StatelessWidget {
-  const ResultScreen({super.key});
+  final double? bmiResult;
+  const ResultScreen({super.key, required this.bmiResult});
+
+  String bmiCategory(double? bmi) {
+    if (bmi!.isNaN || !bmi.isFinite) return 'Invalid';
+    if (bmi < 18.5) return 'Underweight';
+    if (bmi < 25.0) return 'Normal BMI';
+    if (bmi < 30.0) return 'Overweight';
+    if (bmi < 35.0) return 'Obese (Class I)';
+    if (bmi < 40.0) return 'Obese (Class II)';
+    return 'Obese (Class III)';
+  }
+
+  Color bmiColor(double bmi) {
+    if (bmi < 18.5) return const Color(0xFF64B5F6);
+    if (bmi < 25.0) return const Color(0xFF24A056);
+    if (bmi < 30.0) return const Color(0xFFFCE700);
+    return const Color(0xFFFC1300);
+  }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     final topInset = MediaQuery.paddingOf(context).top;
     double arcWidth = 270;
-    final double radius = arcWidth * 0.55; // must match ArcsPainter
-    final double centerY = 200;
-    final double labelY = centerY - radius * 0.58;
+
+    final label = bmiCategory(bmiResult);
 
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
         clipBehavior: Clip.none,
         children: [
-          const DecoratedBox(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.bottomRight,
-                end: Alignment.topLeft,
-                colors: [
-                  Color(0xFF0F2333),
-                  Color(0xFF247BA0),
-                  Color(0xFF189AE5),
-                ],
-                stops: [0.50, 0.90, 1.00],
-              ),
-            ),
+          DecoratedBox(
+            decoration: context.backgroundGradient,
           ),
 
           Positioned.fill(
@@ -54,7 +61,7 @@ class ResultScreen extends StatelessWidget {
                 return CustomPaint(
                   size: Size(arcWidth, 200),
                   painter: ArcsPainter(
-                    bmi: 20,
+                    bmi: bmiResult,
                     minBmi: 10,
                     maxBmi: 40,
                   ),
@@ -74,7 +81,7 @@ class ResultScreen extends StatelessWidget {
               builder: (context, animatedBmi, _) {
                 return Text(
                   key: Key("bmiResult"),
-                  animatedBmi.toStringAsFixed(1),
+                  bmiResult!.toStringAsFixed(1),
                   textAlign: TextAlign.center,
                   style: GoogleFonts.inter(
                     fontSize: 52,
@@ -98,7 +105,7 @@ class ResultScreen extends StatelessWidget {
             left: 0,
             right: 0,
             child: Text(
-              'Normal BMI',
+              label,
               textAlign: TextAlign.center,
               style: GoogleFonts.inter(
                 fontSize: 16,
@@ -195,8 +202,13 @@ class ResultScreen extends StatelessWidget {
 }
 
 class ArcsPainter extends CustomPainter {
-  final double bmi, minBmi, maxBmi;
-  ArcsPainter({required this.bmi, required this.minBmi, required this.maxBmi});
+  final double? bmi;
+  final double minBmi, maxBmi;
+  ArcsPainter({
+    required this.bmi,
+    required this.minBmi,
+    required this.maxBmi,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -265,7 +277,7 @@ class ArcsPainter extends CustomPainter {
     );
 
     // ---- animated indicator (white knob) ----
-    final t = ((bmi - minBmi) / (maxBmi - minBmi)).clamp(0.0, 1.0);
+    final t = ((bmi! - minBmi) / (maxBmi - minBmi)).clamp(0.0, 1.0);
     final angle = startAngle + sweepAngle * t;
 
     final knob = Offset(

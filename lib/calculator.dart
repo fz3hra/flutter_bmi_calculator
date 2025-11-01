@@ -10,17 +10,19 @@ class Calculator {
 
   double? bmiCalc(double? weight, double? height) {
     if (weight == null || height == null || height <= 0) return null;
-    return weight / pow(height, 2);
+    //check if height is in m or cm
+    final convertedHeight = height > 3 ? height / 100 : height;
+    return weight / pow(convertedHeight, 2);
   }
 
-  String displayBMI(String weightText, String heightText) {
+  double? displayBMI(String weightText, String heightText) {
     final weight = parse(weightText);
     final height = parse(heightText);
 
     if (weight != null && height != null) {
       var result = bmiCalc(weight, height);
-      return result.toString();
+      return result;
     }
-    return "";
+    return -1;
   }
 }
